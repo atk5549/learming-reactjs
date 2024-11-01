@@ -7,15 +7,21 @@ export default class TodoAdd extends Component {
         this.handleDescChange = this.handleDescChange.bind(this);
         this.handlImageChange = this.handlImageChange.bind(this);
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
-        this.clearFormData = this.clearFormData.bind(this);
+        this.clearFormData();
+
     }
 
+
     clearFormData() {
+
         this.formData = {
             title: '',
             desc: '',
             image: ''
-        }
+        };
+
+
+
     }
 
     handleTitleChange(evt) {
@@ -45,9 +51,11 @@ export default class TodoAdd extends Component {
         newDeed.done = false;
         newDeed.createdAt = date.toLocaleString();
         newDeed.key = date.getTime();
-        this.props.add(newDeed);
+        // this.props.add(newDeed);
+        console.log(newDeed)
         this.clearFormData();
         evt.target.reset();
+
     }
 
     render() {
@@ -74,13 +82,27 @@ export default class TodoAdd extends Component {
 
                     <div className="field">
                         <div className="file">
-                            <label className="file-label"></label>
+                            <label className="file-label">
+                                <input className="file-input"
+                                       type="file" accept="image/*"
+                                       onChange={this.handlImageChange} />
+                                <span className="file-cta">
+                                    <span className="file-label">Графическая иллюстрация</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div className="field is-grouped is-grouped-right">
+
+                        <div className="control">
+                            <input type="reset" className="button is-link is-light" value="Сброс" />
+                        </div>
+
+                        <div className="control">
+                            <input type="submit" className="button is-primary" value="Создать дело" />
                         </div>
 
                     </div>
-
-
-
                 </form>
             </section>
         );
