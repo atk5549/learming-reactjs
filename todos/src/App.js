@@ -33,10 +33,7 @@ export default class App extends Component {
     // this.data = initialData;
     this.state = {data: initialData}
     this.setDone = this.setDone.bind(this);
-    this.delete = this.delete.bind(this);
   }
-
-
 
   setDone(key) {
     const deed = this.state.data.find((current) => current.key === key);
@@ -46,15 +43,6 @@ export default class App extends Component {
 
     }
   }
-
-  delete(key) {
-    const newData = this.state.data.filter(
-        (current) => current.key !== key
-    );
-    this.setState((state) => ({ data: newData}));
-  }
-
-
 
   render() {
     return (
@@ -68,10 +56,7 @@ export default class App extends Component {
         </nav>
         <main className="content px-6 mt-6">
           {/*<h1>Todos</h1>*/}
-          <TodoList list={this.state.data}
-                    setDone={this.setDone}
-                    delete={this.delete}
-          />
+          <TodoList list={this.state.data} setDone={this.setDone} />
         </main>
       </div>
     );
