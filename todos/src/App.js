@@ -89,7 +89,7 @@ export default class App extends Component {
             <NavLink to="/"
                      className={({isActive}) =>
                          'navbar-item is-uppercase' + (isActive ? 'is-active is-uppercase' : '')
-            }>Todos</NavLink>
+            }>TODOS</NavLink>
 
 
             <a
