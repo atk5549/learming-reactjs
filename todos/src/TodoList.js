@@ -20,6 +20,11 @@ export default function TodoList(props) {
                         </td>
 
                         <td>
+                            {item.done && <del>{item.createdAt}</del>}
+                            {!item.done && item.createdAt}
+                        </td>
+
+                        <td>
                             <button
                                 className="button is-success"
                                 title="Пометить как сделанное"
@@ -33,7 +38,7 @@ export default function TodoList(props) {
                                 className="button is-danger"
                                 title="Удалить"
                                 disabled={item.done}
-                                onClick={(e) => props.delete(item.key)}
+                                onClick={(e) => props.delete(item.key) }
                             >&#9746;</button>
                         </td>
 

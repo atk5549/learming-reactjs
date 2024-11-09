@@ -68,7 +68,7 @@ export default class TodoAdd extends Component {
     }
 
     handleFormSubmit(evt) {
-        evt.preventDefault();
+        evt.preventDefault(); // отключаем обработку событий по умолчанию либо
         const newDeed = {...this.formData};
         const date = new Date();
         newDeed.done = false;

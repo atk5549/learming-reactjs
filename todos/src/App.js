@@ -30,8 +30,12 @@ const initialData = [
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.data = initialData;
+
+    // this.data = initialData; // в место этой строки мы создали строку ниже для того чтобы
+    // работать с данными через состояние а не на прямую с обьектом initialData, т.е мы поместили обьект initialData
+    // в state чтобы отслеживать его состояние
     this.state = {data: initialData}
+
     this.setDone = this.setDone.bind(this);
     this.delete = this.delete.bind(this);
     this.add = this.add.bind(this);
