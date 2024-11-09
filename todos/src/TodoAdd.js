@@ -51,7 +51,7 @@ export default class TodoAdd extends Component {
         newDeed.done = false;
         newDeed.createdAt = date.toLocaleString();
         newDeed.key = date.getTime();
-        // this.props.add(newDeed);
+        this.props.add(newDeed);
         console.log(newDeed)
         this.clearFormData();
         evt.target.reset();
