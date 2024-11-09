@@ -1,11 +1,26 @@
-import { Component } from "react";
+import {Component} from "react";
 import { HashRouter, Routes, Route, NavLink } from "react-router-dom";
 import TodoList from "./TodoList";
 import TodoAdd from "./TodoAdd";
 import TodoDetail from "./TodoDetail";
+import {CrewlistTableData} from "./initDataForMarinePDS/CrewList";
+import {ShipStoreTableData} from "./initDataForMarinePDS/ShipStore";
+
+
+
+// imports for ag-grid
+import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
+import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
+import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the Data Grid
+
+
+
+
 
 const date1 = new Date(2021, 7, 19, 14, 5)
 const date2 = new Date(2021, 7, 19, 15, 23)
+
+
 
 const initialData = [
 
@@ -36,13 +51,20 @@ export default class App extends Component {
     // this.data = initialData; // в место этой строки мы создали строку ниже для того чтобы
     // работать с данными через состояние а не на прямую с обьектом initialData, т.е мы поместили обьект initialData
     // в state чтобы отслеживать его состояние
-    this.state = {data: initialData, showMenu: false};
+    this.state = {
+      data: initialData,
+      showMenu: false
+    };
 
     this.setDone = this.setDone.bind(this);
     this.delete = this.delete.bind(this);
     this.add = this.add.bind(this);
     this.showMenu = this.showMenu.bind(this);
     this.getDeed = this.getDeed.bind(this);
+
+
+
+
   }
 
   add(deed) {
@@ -82,58 +104,64 @@ export default class App extends Component {
 
   render() {
     return (
-      <HashRouter>
-        <nav className="navbar is-light">
-          <div className="navbar-brand">
+        <HashRouter>
+          <nav className="navbar is-light">
+            <div className="navbar-brand">
 
-            <NavLink to="/"
-                     className={({isActive}) =>
-                         'navbar-item is-uppercase' + (isActive ? 'is-active is-uppercase' : '')
-            }>TODOS</NavLink>
+              <NavLink to="/"
+                       className={({isActive}) =>
+                           'navbar-item is-uppercase' + (isActive ? 'is-active is-uppercase' : '')
+                       }>TODOS</NavLink>
 
 
-            <a
-                href="/"
-                className={this.state.showMenu ?
-                    "navbar-burger is-active" :
-                    "navbar-burger"}
-                onClick={this.showMenu}>
-              <span></span>
-              <span></span>
-              <span></span>
-            </a>
+              <a
+                  href="/"
+                  className={this.state.showMenu ?
+                      "navbar-burger is-active" :
+                      "navbar-burger"}
+                  onClick={this.showMenu}>
+                <span></span>
+                <span></span>
+                <span></span>
+              </a>
 
-          </div>
-
-          <div className={this.state.showMenu ? 'navbar-menu is-active' : 'navbar-menu'}
-               onClick={this.showMenu}>
-
-            <div className="navbar-start">
-              <NavLink
-                  to="/add"
-                  className={({isActive}) =>
-                      'navbar-item' + (isActive ? 'is-active' : '')
-                  }
-              >
-                Создать дело
-              </NavLink>
             </div>
 
-          </div>
+            <div className={this.state.showMenu ? 'navbar-menu is-active' : 'navbar-menu'}
+                 onClick={this.showMenu}>
+
+              <div className="navbar-start">
+                <NavLink
+                    to="/add"
+                    className={({isActive}) =>
+                        'navbar-item' + (isActive ? 'is-active' : '')
+                    }
+                >
+                  Создать дело
+                </NavLink>
+              </div>
+
+            </div>
 
 
-        </nav>
+          </nav>
 
-        <main className="content px-6 mt-6">
-          <Routes>
-            <Route path="/" element={<TodoList list={this.state.data} setDone={this.setDone} delete={this.delete}/>} />
-            <Route path="/add" element={<TodoAdd add={this.add}/>} />
-            <Route path="/:key" element={<TodoDetail getDeed={this.getDeed} />} />
+          <main className="content px-6 mt-6">
+            <Routes>
+              <Route path="/" element={<TodoList list={this.state.data} setDone={this.setDone} delete={this.delete}/>}/>
+              <Route path="/add" element={<TodoAdd add={this.add}/>}/>
+              <Route path="/:key" element={<TodoDetail getDeed={this.getDeed}/>}/>
+            </Routes>
+          </main>
 
-          </Routes>
-        </main>
-      </HashRouter>
-
+          <section className="ag-theme-quartz" style={{padding: 80, height: 500, width: 1000}}>
+            <h1>Судовая роль</h1>
+            <AgGridReact rowData={CrewlistTableData.rowData} columnDefs={CrewlistTableData.colDefs}/>
+            <hr/>
+            <h1>Судовые припасы</h1>
+            <AgGridReact rowData={ShipStoreTableData.rowData} columnDefs={ShipStoreTableData.colDefs}/>
+          </section>
+        </HashRouter>
     );
   }
 }
