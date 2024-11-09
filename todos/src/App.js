@@ -35,11 +35,12 @@ export default class App extends Component {
     // this.data = initialData; // в место этой строки мы создали строку ниже для того чтобы
     // работать с данными через состояние а не на прямую с обьектом initialData, т.е мы поместили обьект initialData
     // в state чтобы отслеживать его состояние
-    this.state = {data: initialData}
+    this.state = {data: initialData, showMenu: false};
 
     this.setDone = this.setDone.bind(this);
     this.delete = this.delete.bind(this);
     this.add = this.add.bind(this);
+    this.showMenu = this.showMenu.bind(this);
   }
 
   add(deed) {
@@ -66,6 +67,12 @@ export default class App extends Component {
   }
 
 
+  showMenu(evt) {
+    evt.preventDefault();
+    this.setState((state) => ({showMenu: !state.showMenu}));
+  }
+
+
 
   render() {
     return (
@@ -73,42 +80,53 @@ export default class App extends Component {
         <nav className="navbar is-light">
           <div className="navbar-brand">
 
-            <NavLink
-                to="/"
-                className={({ isActive }) =>
-                    'navbar-item is-uppercase' +
-                    (isActive ? 'is-active' : '')
-             }
-            >
-              Todos
-            </NavLink>
+            <NavLink to="/"
+                     className={({isActive}) =>
+                         'navbar-item is-uppercase' + (isActive ? 'is-active is-uppercase' : '')
+            }>Todos</NavLink>
+
+
+            <a
+                href="/"
+                className={this.state.showMenu ?
+                    "navbar-burger is-active" :
+                    "navbar-burger"}
+                onClick={this.showMenu}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </a>
 
           </div>
 
-          <div className="navbar-menu">
+          <div className={this.state.showMenu ? 'navbar-menu is-active' : 'navbar-menu'}
+               onClick={this.showMenu}>
+
             <div className="navbar-start">
               <NavLink
                   to="/add"
-                  className={({ isActive }) =>
+                  className={({isActive}) =>
                       'navbar-item' + (isActive ? 'is-active' : '')
                   }
               >
                 Создать дело
               </NavLink>
-
             </div>
+
           </div>
+
+
         </nav>
 
         <main className="content px-6 mt-6">
           <Routes>
-            <Route path="/" element={<TodoList list={this.state.data} setDone={this.setDone} delete={this.delete} />} />
-            <Route path="/add" element={<TodoAdd add={this.add}/>} />
+            <Route path="/" element={<TodoList list={this.state.data} setDone={this.setDone} delete={this.delete}/>}/>
+            <Route path="/add" element={<TodoAdd add={this.add}/>}/>
           </Routes>
         </main>
       </HashRouter>
-    );
+  );
   }
-}
+  }
 
 
