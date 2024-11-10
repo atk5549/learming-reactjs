@@ -153,7 +153,7 @@ export default class App extends Component {
               <Route path="/:key" element={<TodoDetail getDeed={this.getDeed}/>}/>
             </Routes>
           </main>
-
+          <hr/>
           <section className="ag-theme-quartz" style={{padding: 80, height: 500, width: 1000}}>
             <h1>Судовая роль</h1>
             <AgGridReact rowData={CrewlistTableData.rowData} columnDefs={CrewlistTableData.colDefs}/>
