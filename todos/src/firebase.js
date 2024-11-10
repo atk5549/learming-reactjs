@@ -10,7 +10,8 @@ const firebaseConfig = {
     projectId: "todos-35ab9",
     storageBucket: "todos-35ab9.firebasestorage.app",
     messagingSenderId: "686060997568",
-    appId: "1:686060997568:web:29434ec4527b0281b2d625"
+    appId: "1:686060997568:web:29434ec4527b0281b2d625",
+    databaseURL: "https://todos-35ab9-default-rtdb.europe-west1.firebasedatabase.app/"
 };
 
 // Initialize Firebase
