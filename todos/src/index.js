@@ -5,6 +5,7 @@ import 'bulma/css/bulma.css';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import './firebase';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
