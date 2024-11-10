@@ -58,7 +58,8 @@ export default class App extends Component {
     // в state чтобы отслеживать его состояние
     this.state = {
       data: initialData,
-      showMenu: false
+      showMenu: false,
+      currentUser: undefined
     };
 
     this.setDone = this.setDone.bind(this);
