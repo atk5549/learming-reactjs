@@ -67,6 +67,7 @@ export default class App extends Component {
     this.add = this.add.bind(this);
     this.showMenu = this.showMenu.bind(this);
     this.getDeed = this.getDeed.bind(this);
+    this.authStateChanged = this.authStateChanged.bind(this);
 
 
 
@@ -108,16 +109,27 @@ export default class App extends Component {
     return this.state.data.find((current) => current.key === key);
   }
 
+
+  authStateChanged(user) {
+    this.setState((state) => ({ currentUser: user }));
+  }
+
+  componentDidMount() {
+    onAuthStateChanged(getAuth(firebaseApp), this.authStateChanged);
+  }
+
+
   render() {
     return (
         <HashRouter>
           <nav className="navbar is-light">
             <div className="navbar-brand">
 
-              <NavLink to="/"
-                       className={({isActive}) =>
-                           'navbar-item is-uppercase' + (isActive ? 'is-active is-uppercase' : '')
-                       }>TODOS</NavLink>
+              <NavLink to="/" className={({isActive}) => 'navbar-item is-uppercase' +
+                  (isActive ? 'is-active is-uppercase' : '')}
+              >
+                {this.state.currentUser ? this.state.currentUser.email : 'TODOS'}
+              </NavLink>
 
 
               <a
@@ -137,19 +149,26 @@ export default class App extends Component {
                  onClick={this.showMenu}>
 
               <div className="navbar-start">
-                <NavLink
-                    to="/add"
-                    className={({isActive}) =>
-                        'navbar-item' + (isActive ? 'is-active' : '')
-                    }
-                >
-                  Создать дело
-                </NavLink>
+                {this.state.currentUser && (
+                  <NavLink
+                      to="/add"
+                      className={({isActive}) =>
+                          'navbar-item' + (isActive ? 'is-active' : '')
+                      }
+                  >
+                    Создать дело
+                  </NavLink>
+                )}
+                {!this.state.currentUser && (
+                    <NavLink to="/register"
+                             className={({isActive}) => 'navbar-item' +
+                                 (isActive ? 'is-active' : '')
+                    }>
+                      Зарегистрироваться
+                    </NavLink>
+                )}
               </div>
-
             </div>
-
-
           </nav>
 
           <main className="content px-6 mt-6">
@@ -157,6 +176,7 @@ export default class App extends Component {
               <Route path="/" element={<TodoList list={this.state.data} setDone={this.setDone} delete={this.delete}/>}/>
               <Route path="/add" element={<TodoAdd add={this.add}/>}/>
               <Route path="/:key" element={<TodoDetail getDeed={this.getDeed}/>}/>
+              <Route path="/register" element={<Register currentUser={this.state.currentUser}/>} />
             </Routes>
           </main>
 
