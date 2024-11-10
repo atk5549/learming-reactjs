@@ -3,12 +3,17 @@ import { HashRouter, Routes, Route, NavLink } from "react-router-dom";
 import TodoList from "./TodoList";
 import TodoAdd from "./TodoAdd";
 import TodoDetail from "./TodoDetail";
-import {CrewlistTableData} from "./initDataForMarinePDS/CrewList";
-import {ShipStoreTableData} from "./initDataForMarinePDS/ShipStore";
 
+// auth and register
+import {getAuth, onAuthStateChanged} from "firebase/auth";
+import Register from "./Register";
+import firebaseApp from "./firebase";
 
 
 // imports for ag-grid
+import {CrewlistTableData} from "./initDataForMarinePDS/CrewList";
+import {ShipStoreTableData} from "./initDataForMarinePDS/ShipStore";
+
 import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the Data Grid
@@ -153,6 +158,7 @@ export default class App extends Component {
               <Route path="/:key" element={<TodoDetail getDeed={this.getDeed}/>}/>
             </Routes>
           </main>
+
           <hr/>
           <section className="ag-theme-quartz" style={{padding: 80, height: 500, width: 1000}}>
             <h1>Судовая роль</h1>
