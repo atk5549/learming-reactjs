@@ -6,6 +6,12 @@ import {register} from "./auth";
 export default class Register extends Component {
     constructor(props) {
         super(props);
+        this.handleEmailChange = this.handleEmailChange.bind(this);
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.handleFormSubmit = this.handleFormSubmit.bind(this);
+        this.clearFormData();
+
+
 
     }
 
