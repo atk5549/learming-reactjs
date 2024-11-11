@@ -10,6 +10,7 @@ import Register from "./Register";
 import Logout from "./Logout";
 import Login from "./Login";
 import firebaseApp from "./firebase";
+import { getList } from "./api";
 
 
 // imports for ag-grid
@@ -18,7 +19,8 @@ import {ShipStoreTableData} from "./initDataForMarinePDS/ShipStore";
 
 import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
-import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the Data Grid
+import "ag-grid-community/styles/ag-theme-quartz.css";
+
 
 
 
@@ -114,6 +116,8 @@ export default class App extends Component {
 
   authStateChanged(user) {
     this.setState((state) => ({ currentUser: user }));
+    const todolist = getList(user)
+    console.log(todolist)
   }
 
   componentDidMount() {

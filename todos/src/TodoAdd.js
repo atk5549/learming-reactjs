@@ -80,6 +80,7 @@ export default class TodoAdd extends Component {
         newDeed.done = false;
         newDeed.createdAt = date.toLocaleString();
         const addedDeed = await add(this.props.currentUser, newDeed);
+        console.log("текущий пользователь из todoAdd: " + JSON.stringify(this.props.currentUser));
         this.props.add(addedDeed);
         // newDeed.key = date.getTime();
         // this.props.add(newDeed);

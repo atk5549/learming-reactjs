@@ -32,28 +32,52 @@ export async function logout() {
 }
 
 
+// метод ref() - возвращает обьект ссылки
+// метод val() - возвращает документ в виде простого обьекта
 // Добавление дела в firebase базу
 export async function add(user, deed) {
-    const oRef = await push(
-        ref(getDatabase(), `users/${user.uid}/todos`)
-    );
 
+    // создадим ссылку по которой запишем документ с новым делом текущего юзера
+    const oRef = await push(ref(getDatabase(), `users/${user.uid}/todos`));
+
+    // запишем дело deed текущего юзера
     await set(oRef, deed);
+
+    // получим записанный дело по ссылке
     const oSnapshot = await get(query(oRef));
 
+    // получим дело (внимание/ key присваивается внутри базы автоматически и при)
     const oDeed = oSnapshot.val();
+
+    // добавляем в oDeed.key ключ дела из базы
     oDeed.key = oRef.key;
 
     console.log("Ссылка oRef: " +  oRef);
+    console.log("Ссылка oRef.key: " +  oRef.key);
     console.log("uid текущего пользователя: " +  user.uid);
     console.log("oSnapshot: " +  JSON.stringify(oSnapshot));
     console.log("oDeed: " +  JSON.stringify(oDeed));
 
-
     return oDeed;
 }
 
+export async function getList(user){
 
+    const dbCurrentUser = await ref(getDatabase(), `users/${user.uid}/todos`);
+
+    // получим записанный дело по ссылке
+    const oSnapshot = await get(query(dbCurrentUser));
+    const oArr = [];
+    let oDeed;
+
+    oSnapshot.forEach((oDoc) => {
+        oDeed = oDoc.val();
+        oDeed.key = oDoc.key;
+        oArr.push(oDeed);
+    });
+    return oArr;
+
+}
 
 
 
