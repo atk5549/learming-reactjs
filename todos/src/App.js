@@ -7,6 +7,8 @@ import TodoDetail from "./TodoDetail";
 // auth and register
 import {getAuth, onAuthStateChanged} from "firebase/auth";
 import Register from "./Register";
+import Logout from "./Logout";
+import Login from "./Login";
 import firebaseApp from "./firebase";
 
 
@@ -149,23 +151,35 @@ export default class App extends Component {
                  onClick={this.showMenu}>
 
               <div className="navbar-start">
+
+                {/* if user auth-ed show make deed and logout */}
                 {this.state.currentUser && (
-                  <NavLink
-                      to="/add"
-                      className={({isActive}) =>
-                          'navbar-item' + (isActive ? 'is-active' : '')
-                      }
-                  >
-                    Создать дело
-                  </NavLink>
+                    <>
+
+                      {/* if user auth-ed show make deed */}
+                      <NavLink to="/add"
+                               className={({isActive}) =>
+                                   'navbar-item' + (isActive ? 'is-active' : '')}>Создать дело</NavLink>
+
+                      {/* if user auth-ed show logout */}
+                      <NavLink to="/logout"
+                               className={({isActive}) =>
+                                   'navbar-item' + (isActive ? 'is-active' : '')}>Выйти</NavLink>
+
+                    </>
                 )}
+
+                {/* if user not auth-ed show Login */}
                 {!this.state.currentUser && (
-                    <NavLink to="/register"
-                             className={({isActive}) => 'navbar-item' +
-                                 (isActive ? 'is-active' : '')
-                    }>
-                      Зарегистрироваться
-                    </NavLink>
+                    <>
+                      {/* if user not auth-ed show Login */}
+                      <NavLink to="/login"
+                               className={({isActive}) =>
+                              'navbar-item' + (isActive ? 'is-active' : '')}>Войти</NavLink>
+                      {/* if user not auth-ed show Register */}
+                      <NavLink to="/register" className={({isActive}) =>
+                          'navbar-item' + (isActive ? 'is-active' : '')}>Зарегистрироваться</NavLink>
+                    </>
                 )}
               </div>
             </div>
@@ -177,6 +191,8 @@ export default class App extends Component {
               <Route path="/add" element={<TodoAdd add={this.add}/>}/>
               <Route path="/:key" element={<TodoDetail getDeed={this.getDeed}/>}/>
               <Route path="/register" element={<Register currentUser={this.state.currentUser}/>} />
+              <Route path="/login" element={<Login currentUser={this.state.currentUser}/>} />
+              <Route path="/logout" element={<Logout currentUser={this.state.currentUser}/>} />
             </Routes>
           </main>
 
