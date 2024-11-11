@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { add } from "./api";
 
 import { Navigate } from "react-router-dom";
 
@@ -72,14 +73,16 @@ export default class TodoAdd extends Component {
         } else this.formData.image = '';
     }
 
-    handleFormSubmit(evt) {
+    async handleFormSubmit(evt) {
         evt.preventDefault(); // отключаем обработку событий по умолчанию либо
         const newDeed = {...this.formData};
         const date = new Date();
         newDeed.done = false;
         newDeed.createdAt = date.toLocaleString();
-        newDeed.key = date.getTime();
-        this.props.add(newDeed);
+        const addedDeed = await add(this.props.currentUser, newDeed);
+        this.props.add(addedDeed);
+        // newDeed.key = date.getTime();
+        // this.props.add(newDeed);
         // console.log(newDeed)
         // this.clearFormData();
         // evt.target.reset();

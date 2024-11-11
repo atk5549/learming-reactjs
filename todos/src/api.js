@@ -1,4 +1,5 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { getDatabase, ref, push, set, get, query} from 'firebase/database';
 
 // регистрация/Registration
 export async function register(email, password) {
@@ -29,5 +30,30 @@ export async function login(email, password) {
 export async function logout() {
     await signOut(getAuth());
 }
+
+
+// Добавление дела в firebase базу
+export async function add(user, deed) {
+    const oRef = await push(
+        ref(getDatabase(), `users/${user.uid}/todos`)
+    );
+
+    await set(oRef, deed);
+    const oSnapshot = await get(query(oRef));
+
+    const oDeed = oSnapshot.val();
+    oDeed.key = oRef.key;
+
+    console.log("Ссылка oRef: " +  oRef);
+    console.log("uid текущего пользователя: " +  user.uid);
+    console.log("oSnapshot: " +  JSON.stringify(oSnapshot));
+    console.log("oDeed: " +  JSON.stringify(oDeed));
+
+
+    return oDeed;
+}
+
+
+
 
 
