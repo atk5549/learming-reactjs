@@ -8,12 +8,12 @@ export default function TodoDetail(props) {
     return (
         <section>
             {deed.done &&
-                <p className="has-text-success">Выполнено</p>
+                <p className="has-text-success">Документ зарегистрирован</p>
             }
 
-            <h1>{deed.title}</h1>
+            <h1>{deed.accountNumber}</h1>
 
-            <p>{deed.createdAt}</p>
+            <p>{deed.finishedAt}</p>
 
             {deed.desc && <p>{deed.desc}</p>}
 

@@ -162,7 +162,7 @@ export default class App extends Component {
                       {/* if user auth-ed show make deed */}
                       <NavLink to="/add"
                                className={({isActive}) =>
-                                   'navbar-item' + (isActive ? 'is-active' : '')}>Создать дело</NavLink>
+                                   'navbar-item' + (isActive ? 'is-active' : '')}>Добавить документ</NavLink>
 
                       {/* if user auth-ed show logout */}
                       <NavLink to="/logout"

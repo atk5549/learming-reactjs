@@ -6,7 +6,7 @@ export default function TodoList(props) {
     return (
         <section>
 
-            { !props.currentUser ? <h1>Необходимо создать или войти в профиль</h1> : <h1>Список дел</h1>}
+            { !props.currentUser ? <h1>Необходимо создать или войти в профиль</h1> : <h1>Список счетов</h1>}
             <hr/>
             <table className="table is-hoverable is-fullwidth">
                 <tbody>
@@ -15,45 +15,54 @@ export default function TodoList(props) {
                         <hr/>
 
                         <td>
-                            <h5>Заголовок</h5>
+                            <h5>Номер документа</h5>
 
                             <Link to={`/${item.key}`}>
-                                {item.done && <del>{item.title}</del>}
-                                {!item.done && item.title}
+                                {item.done && <strong>{item.accountNumber}</strong>}
+                                {!item.done && item.accountNumber}
                             </Link>
 
                         </td>
-                        <td>
-
-                            <h3>{item.done ? "Выполнено" : "Не выполнено"}</h3>
-
-                        </td>
-
-                        <section className="">
-                            <h5>Описание</h5>
-
-                            <textarea className="textarea"
-                                      placeholder={item.desc}
-                                      disabled={item.done ? true : false}
-                            />
-                        </section>
-
-
-                        {/*{item.done && <del>{item.desc}</del>}*/}
-                        {/*{!item.done && item.desc}*/}
-
 
                         <td>
-                            <h5>Дата создания</h5>
-                            {item.done && item.createdAt}
-                            {!item.done && item.createdAt}
+                            <h5>Дата документа</h5>
+                            {item.done && <strong>{item.dateAccount}</strong>}
+                            {!item.done && item.dateAccount}
                         </td>
 
                         <td>
-                            <h5>Дата окончания</h5>
-                            {item.done && item.finishedAt}
+                            <h5>Продавец</h5>
+                            {item.done && <strong>{item.nameBuyer}</strong>}
+                            {!item.done && item.nameBuyer}
+                        </td>
+
+                        <td>
+                            <h5>Покупатель</h5>
+                            {item.done && <strong>{item.nameSeller}</strong>}
+                            {!item.done && item.nameSeller}
+                        </td>
+
+                        <td className="">
+                            <h5>Описание документа</h5>
+                            <p>{item.desc}</p>
+                        </td>
+
+
+                        <td>
+                            <h5>Дата регистрации документа</h5>
+                            <strong>{item.done && item.finishedAt}</strong>
                             {!item.done && item.finishedAt}
                         </td>
+
+
+                        <td>
+
+                            <h3 className={item.done ? "has-text-primary" : "has-text-warning"}>
+                                {!item.done ? "Документ в стадии регистрации" : "Документ зарегистрирован"}
+                            </h3>
+
+                        </td>
+
 
                         <td>
                             <button

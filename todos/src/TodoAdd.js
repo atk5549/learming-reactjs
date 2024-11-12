@@ -30,7 +30,11 @@ export default class TodoAdd extends Component {
 
         this.state = {redirect: false};
 
-        this.handleTitleChange = this.handleTitleChange.bind(this);
+        this.handleAccountNumberChange = this.handleAccountNumberChange.bind(this);
+        this.handleDateAccountChange = this.handleDateAccountChange.bind(this);
+        this.handleBuyerChange = this.handleBuyerChange.bind(this);
+        this.handleSellerChange = this.handleSellerChange.bind(this);
+
         this.handleDescChange = this.handleDescChange.bind(this);
         this.handlImageChange = this.handlImageChange.bind(this);
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -44,7 +48,10 @@ export default class TodoAdd extends Component {
     clearFormData() {
 
         this.formData = {
-            title: '',
+            accountNumber: '',
+            dateAccount: '',
+            nameBuyer: '',
+            nameSeller: '',
             desc: '',
             image: ''
         };
@@ -53,8 +60,22 @@ export default class TodoAdd extends Component {
 
     }
 
-    handleTitleChange(evt) {
-        this.formData.title = evt.target.value;
+    handleAccountNumberChange(evt) {
+        this.formData.accountNumber = evt.target.value;
+    }
+
+    handleDateAccountChange(evt) {
+        this.formData.dateAccount = evt.target.value;
+    }
+
+    // buyer
+    handleBuyerChange(evt) {
+        this.formData.nameBuyer = evt.target.value;
+    }
+
+    //seller
+    handleSellerChange(evt) {
+        this.formData.nameSeller = evt.target.value;
     }
 
     handleDescChange(evt) {
@@ -103,23 +124,43 @@ export default class TodoAdd extends Component {
         else {
             return (
                 <section>
-                    <h1>Создание нового дела</h1>
+                    <h1>Создание нового счёта</h1>
                     <form onSubmit={this.handleFormSubmit}>
 
                         <div className="field">
-                            <label className="label">Заголовок</label>
+                            <label className="label">Номер (Счёта/ Счёт фактуры/ УПД)</label>
                             <div className="control">
                                 <input className="input"
-                                       onChange={this.handleTitleChange}/>
+                                       onChange={this.handleAccountNumberChange}/>
+                            </div>
+                        </div>
+
+                        <div className="field">
+                            <label className="label">Дата документа</label>
+                            <div className="control">
+                                <input className="input" onChange={this.handleDateAccountChange}/>
+                            </div>
+                        </div>
+                        {/*buyer */}
+                        <div className="field">
+                            <label className="label">Наименование компании (Покупатель)</label>
+                            <div className="control">
+                                <input className="input" onChange={this.handleBuyerChange}/>
+                            </div>
+                        </div>
+                        {/*seller */}
+                        <div className="field">
+                            <label className="label">Наименование компании (Продавец)</label>
+                            <div className="control">
+                                <input className="input" onChange={this.handleSellerChange}/>
                             </div>
                         </div>
 
                         <div className="field">
                             <label className="label">Примечание</label>
                             <div className="control">
-                                <textarea className="textarea" placeholder="Вставьте описание" onChange={this.handleDescChange}/>
-                                {/*<input className="textarea"*/}
-                                {/*       onChange={this.handleDescChange}/>*/}
+                                <input className="input"
+                                          placeholder="Опишите с чем связан документ" onChange={this.handleDescChange}/>
                             </div>
                         </div>
 
@@ -130,7 +171,7 @@ export default class TodoAdd extends Component {
                                            type="file" accept="image/*"
                                            onChange={this.handlImageChange}/>
                                     <span className="file-cta">
-                                        <span className="file-label">Графическая иллюстрация</span>
+                                        <span className="file-label">Скан документа</span>
                                     </span>
                                 </label>
                             </div>
@@ -138,11 +179,11 @@ export default class TodoAdd extends Component {
                         <div className="field is-grouped is-grouped-right">
 
                             <div className="control">
-                                <input type="reset" className="button is-link is-light" value="Сброс"/>
+                                <input type="reset" className="button is-link is-light" value="Очистить форму"/>
                             </div>
 
                             <div className="control">
-                                <input type="submit" className="button is-primary" value="Создать дело"/>
+                                <input type="submit" className="button is-primary" value="Добавить документ"/>
                             </div>
 
                         </div>
