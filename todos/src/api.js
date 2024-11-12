@@ -80,4 +80,14 @@ export async function getList(user){
 }
 
 
+// помечаем дело как выполненное
+export function setDone(user, key){
+    const setRef = ref(getDatabase(), `users/${user.uid}/todos/${key}/done`, true);
+
+    // отмечаем дело как выполненное по ссылке
+    return set(setRef);
+
+}
+
+
 
