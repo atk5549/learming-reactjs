@@ -98,7 +98,8 @@ export default class App extends Component {
 
 
   getDeed(key) {
-    key = +key; // унарный плюс преобразует строку в число
+    // так как в базе firebase идентификатор в виде строки, уберем преобразование строки в число унарным операторм
+    // key = +key; // унарный плюс преобразует строку в число
     return this.state.data.find((current) => current.key === key);
   }
 
