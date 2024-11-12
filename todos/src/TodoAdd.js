@@ -87,7 +87,7 @@ export default class TodoAdd extends Component {
         // console.log(newDeed)
         // this.clearFormData();
         // evt.target.reset();
-        this.setState((state) => ({redirect: true}));
+        this.setState((state) => ({ redirect: true }));
 
     }
 
