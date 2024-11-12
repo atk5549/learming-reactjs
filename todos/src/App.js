@@ -50,7 +50,7 @@ export default class App extends Component {
     // работать с данными через состояние а не на прямую с обьектом initialData, т.е мы поместили обьект initialData
     // в state чтобы отслеживать его состояние
     this.state = {
-      data: initialData,
+      data: [],
       showMenu: false,
       currentUser: undefined
     };
