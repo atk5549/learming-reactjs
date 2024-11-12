@@ -103,10 +103,14 @@ export default class App extends Component {
   }
 
 
-  authStateChanged(user) {
+  async authStateChanged(user) {
     this.setState((state) => ({ currentUser: user }));
-    const todolist = getList(user)
-    console.log(todolist)
+    if (user) {
+      const newData = await getList(user);
+      this.setState((state) => ({ data: newData }));
+    } else {
+      this.setState((state) => ({ data: [] }));
+    }
   }
 
   componentDidMount() {
