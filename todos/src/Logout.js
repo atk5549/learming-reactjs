@@ -7,5 +7,5 @@ export default function Logout(props) {
         return null;
     }
     else
-        return <Navigate to="/" replace />;
+        return <Navigate to="/logout" replace />;
 };

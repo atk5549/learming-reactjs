@@ -1,5 +1,5 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { getDatabase, ref, push, set, get, query} from 'firebase/database';
+import { getDatabase, ref, push, set, get, query, remove} from 'firebase/database';
 
 // регистрация/Registration
 export async function register(email, password) {
@@ -82,10 +82,20 @@ export async function getList(user){
 
 // помечаем дело как выполненное
 export function setDone(user, key){
-    const setRef = ref(getDatabase(), `users/${user.uid}/todos/${key}/done`, true);
 
     // отмечаем дело как выполненное по ссылке
-    return set(setRef);
+    return set(ref(getDatabase(), `users/${user.uid}/todos/${key}/done`), true);
+
+}
+
+
+
+// удаляем дело по ссылке
+export function del(user, key){
+    const delRef = ref(getDatabase(), `users/${user.uid}/todos/${key}`);
+
+    // удаляем дело по ссылке
+    return remove(delRef);
 
 }
 

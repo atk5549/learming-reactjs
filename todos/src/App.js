@@ -10,16 +10,16 @@ import Register from "./Register";
 import Logout from "./Logout";
 import Login from "./Login";
 import firebaseApp from "./firebase";
-import { getList } from "./api";
+import { getList, setDone, del} from "./api";
 
 
-// imports for ag-grid
-import {CrewlistTableData} from "./initDataForMarinePDS/CrewList";
-import {ShipStoreTableData} from "./initDataForMarinePDS/ShipStore";
-
-import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
-import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
-import "ag-grid-community/styles/ag-theme-quartz.css";
+// // imports for ag-grid
+// import {CrewlistTableData} from "./initDataForMarinePDS/CrewList";
+// import {ShipStoreTableData} from "./initDataForMarinePDS/ShipStore";
+//
+// import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
+// import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
+// import "ag-grid-community/styles/ag-theme-quartz.css";
 
 // const date1 = new Date(2021, 7, 19, 14, 5)
 // const date2 = new Date(2021, 7, 19, 15, 23)
@@ -74,16 +74,21 @@ export default class App extends Component {
 
 
 
-  setDone(key) {
+  async setDone(key) {
+    const date = new Date();
+
+    await setDone(this.state.currentUser, key);
     const deed = this.state.data.find((current) => current.key === key);
     if (deed) {
       deed.done = true;
+      deed.finishedAt = date.toLocaleString();
     this.setState((state) => ({}));
 
     }
   }
 
-  delete(key) {
+  async delete(key) {
+    await del(this.state.currentUser, key);
     const newData = this.state.data.filter(
         (current) => current.key !== key
     );
@@ -185,23 +190,29 @@ export default class App extends Component {
 
           <main className="content px-6 mt-6">
             <Routes>
-              <Route path="/" element={<TodoList list={this.state.data} setDone={this.setDone} delete={this.delete}/>}/>
-              <Route path="/add" element={<TodoAdd add={this.add} currentUser={this.state.currentUser}/>}/>
-              <Route path="/:key" element={<TodoDetail getDeed={this.getDeed}/>}/>
+              <Route path="/" element={<TodoList list={this.state.data}
+                                                 setDone={this.setDone}
+                                                 delete={this.delete}
+                                                 currentUser={this.state.currentUser} />}/>
+
+              <Route path="/add" element={<TodoAdd add={this.add}
+                                                   currentUser={this.state.currentUser}/>}/>
+
+              <Route path="/:key" element={<TodoDetail getDeed={this.getDeed} currentUser={this.state.currentUser} />}/>
               <Route path="/register" element={<Register currentUser={this.state.currentUser}/>} />
               <Route path="/login" element={<Login currentUser={this.state.currentUser}/>} />
               <Route path="/logout" element={<Logout currentUser={this.state.currentUser}/>} />
             </Routes>
           </main>
 
-          <hr/>
-          <section className="ag-theme-quartz" style={{padding: 80, height: 500, width: 1000}}>
-            <h1>Судовая роль</h1>
-            <AgGridReact rowData={CrewlistTableData.rowData} columnDefs={CrewlistTableData.colDefs}/>
-            <hr/>
-            <h1>Судовые припасы</h1>
-            <AgGridReact rowData={ShipStoreTableData.rowData} columnDefs={ShipStoreTableData.colDefs}/>
-          </section>
+          {/*<hr/>*/}
+          {/*<section className="ag-theme-quartz" style={{padding: 80, height: 500, width: 1000}}>*/}
+          {/*  <h1>Судовая роль</h1>*/}
+          {/*  <AgGridReact rowData={CrewlistTableData.rowData} columnDefs={CrewlistTableData.colDefs}/>*/}
+          {/*  <hr/>*/}
+          {/*  <h1>Судовые припасы</h1>*/}
+          {/*  <AgGridReact rowData={ShipStoreTableData.rowData} columnDefs={ShipStoreTableData.colDefs}/>*/}
+          {/*</section>*/}
         </HashRouter>
     );
   }

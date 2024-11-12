@@ -77,8 +77,12 @@ export default class TodoAdd extends Component {
         evt.preventDefault(); // отключаем обработку событий по умолчанию либо
         const newDeed = {...this.formData};
         const date = new Date();
+
+        // генерируется после создания дела
         newDeed.done = false;
         newDeed.createdAt = date.toLocaleString();
+        newDeed.finishedAt = "-- по окончанию --".toLocaleString();
+
         const addedDeed = await add(this.props.currentUser, newDeed);
         console.log("текущий пользователь из todoAdd: " + JSON.stringify(this.props.currentUser));
         this.props.add(addedDeed);
@@ -113,8 +117,9 @@ export default class TodoAdd extends Component {
                         <div className="field">
                             <label className="label">Примечание</label>
                             <div className="control">
-                                <input className="textarea"
-                                       onChange={this.handleDescChange}/>
+                                <textarea className="textarea" placeholder="Вставьте описание" onChange={this.handleDescChange}/>
+                                {/*<input className="textarea"*/}
+                                {/*       onChange={this.handleDescChange}/>*/}
                             </div>
                         </div>
 

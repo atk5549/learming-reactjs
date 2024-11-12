@@ -5,28 +5,54 @@ import {Link} from "react-router-dom";
 export default function TodoList(props) {
     return (
         <section>
-            <h1>Дела</h1>
+
+            { !props.currentUser ? <h1>Необходимо создать или войти в профиль</h1> : <h1>Список дел</h1>}
+            <hr/>
             <table className="table is-hoverable is-fullwidth">
                 <tbody>
                 {props.list.map((item) => (
                     <tr key={item.key}>
+                        <hr/>
 
                         <td>
+                            <h5>Заголовок</h5>
+
                             <Link to={`/${item.key}`}>
                                 {item.done && <del>{item.title}</del>}
                                 {!item.done && item.title}
                             </Link>
 
                         </td>
+                        <td>
+
+                            <h3>{item.done ? "Выполнено" : "Не выполнено"}</h3>
+
+                        </td>
+
+                        <section className="">
+                            <h5>Описание</h5>
+
+                            <textarea className="textarea"
+                                      placeholder={item.desc}
+                                      disabled={item.done ? true : false}
+                            />
+                        </section>
+
+
+                        {/*{item.done && <del>{item.desc}</del>}*/}
+                        {/*{!item.done && item.desc}*/}
+
 
                         <td>
-                            {item.done && <del>{item.desc}</del>}
-                            {!item.done && item.desc}
+                            <h5>Дата создания</h5>
+                            {item.done && item.createdAt}
+                            {!item.done && item.createdAt}
                         </td>
 
                         <td>
-                            {item.done && <del>{item.createdAt}</del>}
-                            {!item.done && item.createdAt}
+                            <h5>Дата окончания</h5>
+                            {item.done && item.finishedAt}
+                            {!item.done && item.finishedAt}
                         </td>
 
                         <td>
@@ -43,9 +69,10 @@ export default function TodoList(props) {
                                 className="button is-danger"
                                 title="Удалить"
                                 disabled={item.done}
-                                onClick={(e) => props.delete(item.key) }
+                                onClick={(e) => props.delete(item.key)}
                             >&#9746;</button>
                         </td>
+                        <hr/>
 
                     </tr>
                 ))}

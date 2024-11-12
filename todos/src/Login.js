@@ -37,7 +37,7 @@ export default class Login extends Component {
 
     render() {
         if (this.props.currentUser)
-            return <Navigate to="/login" replace></Navigate>;
+            return <Navigate to="/" replace></Navigate>;
         else
             return (
                 <section>
