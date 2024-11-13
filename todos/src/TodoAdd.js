@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import { add } from "./api";
 
 import { Navigate } from "react-router-dom";
+import Select from "react-select";
+import {optionList} from "./CompanyNamesOptionsSelect";
+
 
 export default class TodoAdd extends Component {
     constructor(props) {
@@ -28,13 +31,13 @@ export default class TodoAdd extends Component {
 
         super(props);
 
-        this.state = {redirect: false};
+        this.state = {redirect: false, selectedOption: null};
+
 
         this.handleAccountNumberChange = this.handleAccountNumberChange.bind(this);
         this.handleDateAccountChange = this.handleDateAccountChange.bind(this);
         this.handleBuyerChange = this.handleBuyerChange.bind(this);
         this.handleSellerChange = this.handleSellerChange.bind(this);
-
         this.handleDescChange = this.handleDescChange.bind(this);
         this.handlImageChange = this.handlImageChange.bind(this);
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -43,6 +46,10 @@ export default class TodoAdd extends Component {
 
 
     }
+
+
+
+
 
 
     clearFormData() {
@@ -69,13 +76,18 @@ export default class TodoAdd extends Component {
     }
 
     // buyer
-    handleBuyerChange(evt) {
-        this.formData.nameBuyer = evt.target.value;
+    handleBuyerChange(selectedOption) {
+        this.setState({ selectedOption },() =>
+            this.formData.nameBuyer = this.state.selectedOption.label
+        )
     }
 
+
     //seller
-    handleSellerChange(evt) {
-        this.formData.nameSeller = evt.target.value;
+    handleSellerChange(selectedOption) {
+        this.setState({ selectedOption },() =>
+            this.formData.nameSeller = this.state.selectedOption.label
+        )
     }
 
     handleDescChange(evt) {
@@ -142,17 +154,32 @@ export default class TodoAdd extends Component {
                             </div>
                         </div>
                         {/*buyer */}
+
                         <div className="field">
                             <label className="label">Наименование компании (Покупатель)</label>
                             <div className="control">
-                                <input className="input" onChange={this.handleBuyerChange}/>
+                                <Select
+                                    options={optionList}
+                                    placeholder="Выбери компанию"
+                                    value={this.state.selectedOptions}
+                                    onChange={this.handleBuyerChange}
+                                    isSearchable={true}
+                                    isRtl={false}
+                                />
                             </div>
                         </div>
                         {/*seller */}
                         <div className="field">
                             <label className="label">Наименование компании (Продавец)</label>
                             <div className="control">
-                                <input className="input" onChange={this.handleSellerChange}/>
+                                <Select
+                                    options={optionList}
+                                    placeholder="Выбери компанию"
+                                    value={this.state.selectedOptions}
+                                    onChange={this.handleSellerChange}
+                                    isSearchable={true}
+                                    isRtl={false}
+                                />
                             </div>
                         </div>
 

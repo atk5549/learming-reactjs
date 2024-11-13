@@ -33,13 +33,13 @@ export default function TodoList(props) {
                         <td>
                             <h5>Продавец</h5>
                             {item.done && <strong>{item.nameBuyer}</strong>}
-                            {!item.done && item.nameBuyer}
+                            {!item.done && <strong>{item.nameBuyer}</strong>}
                         </td>
 
                         <td>
                             <h5>Покупатель</h5>
                             {item.done && <strong>{item.nameSeller}</strong>}
-                            {!item.done && item.nameSeller}
+                            {!item.done && <strong>{item.nameSeller}</strong>}
                         </td>
 
                         <td className="">
